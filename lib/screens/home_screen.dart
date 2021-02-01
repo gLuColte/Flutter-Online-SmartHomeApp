@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:smart_home_app/main.dart';
 
 class HomeScreen extends StatefulWidget {
   @override
@@ -7,105 +8,166 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _HomeScreenState extends State<HomeScreen> {
+  // Drawer
+  GlobalKey<ScaffoldState> _drawerKey = GlobalKey();
+
+  // Build Bottom Bar Items
+  BottomNavigationBarItem _buildBottomItem({IconData icon}){
+    return BottomNavigationBarItem(
+        icon: Icon(
+          icon,
+          size: 20.0,
+          color: Colors.black,
+        ),
+        title: SizedBox.shrink()
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      body: SafeArea(
-        child: Padding(
-          padding: EdgeInsets.fromLTRB(30, 20, 30, 20),
-          child: Column(
-          children: <Widget>[
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: <Widget>[
-                Icon(
-                  FontAwesomeIcons.list,
-                  color: Colors.black,
-                ),
-                Icon(
-                  FontAwesomeIcons.slidersH,
-                  color: Colors.black,
-                ),
-              ],
-            ),
-            SizedBox(height: 30.0,),
-            // To Be Replaced
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: <Widget>[
-                Icon(
-                  FontAwesomeIcons.wind,
-                  color: Theme.of(context).accentColor,
-                  size: 40.0,
-                ),
-                Icon(
-                  FontAwesomeIcons.lightbulb,
-                  color: Colors.grey,
-                  size: 40.0,
-                ),
-                Icon(
-                  FontAwesomeIcons.tree,
-                  color: Colors.grey,
-                  size: 40.0,
-                ),
-                Icon(
-                  FontAwesomeIcons.tv,
-                  color: Colors.grey,
-                  size: 40.0,
-                ),
-                Icon(
-                  FontAwesomeIcons.volumeUp,
-                  color: Colors.grey,
-                  size: 40.0,
-                ),
-              ],
-            ),
-            SizedBox(height: 30.0,),
-            Expanded(
-              child: Container(
-                child: Center(child: Text('child')),
-                color: Colors.red,
-              ),
+    return SafeArea(
+      child: Scaffold(
+        drawer: leadDrawer(),
+        endDrawer: endDrawer(),
+        appBar: AppBar(
+          backgroundColor: Colors.white,
+          leading: Builder(
+            builder: (context){
+              return IconButton(
+                icon: Icon(FontAwesomeIcons.list, color: Colors.black,),
+                onPressed: (){
+                  Scaffold.of(context).openDrawer();
+                },
+              );
+            },
+          ),
+          actions: <Widget>[
+            Builder(
+              builder: (context){
+                return IconButton(
+                  icon: Icon(Icons.person, color: Colors.black,),
+                  onPressed: (){
+                    Scaffold.of(context).openEndDrawer();
+                  },
+                );
+              },
             )
           ],
-      ),
+        ),
+        body: Column(
+          children: <Widget>[
+            Expanded(
+              child: DefaultTabController(
+                length: 5,
+                child: Scaffold(
+                  appBar: AppBar(
+                    bottomOpacity: 0.0,
+                    elevation: 0.0,
+                    backgroundColor: Colors.transparent,
+                    title: TabBar(
+                      unselectedLabelColor: Colors.grey,
+                      labelColor: Theme.of(context).accentColor,
+                      tabs: <Widget>[
+                        Tab(icon: Icon(FontAwesomeIcons.wind)),
+                        Tab(icon: Icon(FontAwesomeIcons.lightbulb)),
+                        Tab(icon: Icon(FontAwesomeIcons.tree)),
+                        Tab(icon: Icon(FontAwesomeIcons.tv)),
+                        Tab(icon: Icon(FontAwesomeIcons.volumeUp)),
+                      ],
+                    )
+                  ),
+                  body: TabBarView(
+                    children: <Widget>[
+                      Icon(Icons.apps),
+                      Icon(Icons.apps),
+                      Icon(Icons.apps),
+                      Icon(Icons.apps),
+                      Icon(Icons.apps),
+                    ],
+                  ),
+                ),
+              )
+            ),
+          ],
+        ),
+        // TODO: Need to be replaced with a Clickable widget that opens to another window
+        bottomNavigationBar: BottomNavigationBar(
+
+          type: BottomNavigationBarType.fixed,
+          items: [
+            _buildBottomItem(icon: FontAwesomeIcons.home),
+            _buildBottomItem(icon: FontAwesomeIcons.wallet),
+            _buildBottomItem(icon: FontAwesomeIcons.comments),
+            _buildBottomItem(icon: FontAwesomeIcons.users),
+          ],
         ),
       ),
-      bottomNavigationBar: BottomNavigationBar(
-        type: BottomNavigationBarType.fixed,
-        items: [
-          BottomNavigationBarItem(
-              icon: Icon(
-                FontAwesomeIcons.home,
-                size: 20.0,
-                color: Colors.black,
+    );
+  }
+}
+
+class leadDrawer extends StatelessWidget {
+  // Build Bottom Bar Items
+  ListTile _buildTile({BuildContext context, IconData icon, String text}){
+    return ListTile(
+        leading: Icon(icon,),
+        title: Text(text),
+        onTap: () => {Navigator.of(context).pop()},
+    );
+  }
+  @override
+  Widget build(BuildContext context) {
+    return Drawer(
+      child: ListView(
+        padding: EdgeInsets.zero,
+        children: <Widget>[
+          DrawerHeader(
+            child: Center(
+              child: Text(
+                'Left Side menu',
+                style: TextStyle(color: Colors.black, fontSize: 25),
               ),
-              title: SizedBox.shrink()
+            ),
           ),
-          BottomNavigationBarItem(
-              icon: Icon(
-                FontAwesomeIcons.wallet,
-                size: 20.0,
-                color: Colors.black,
+          _buildTile(context: context, icon : Icons.input, text: 'Welcome'),
+          _buildTile(context: context, icon : Icons.verified_user, text: 'Profile'),
+          _buildTile(context: context, icon : Icons.settings, text: 'Settings'),
+          _buildTile(context: context, icon : Icons.border_color, text: 'Feedback'),
+          _buildTile(context: context, icon : Icons.exit_to_app, text: 'Logout'),
+        ],
+      ),
+    );
+  }
+}
+
+class endDrawer extends StatelessWidget {
+  // Build Bottom Bar Items
+  ListTile _buildTile({BuildContext context, IconData icon, String text}){
+    return ListTile(
+      leading: Icon(icon,),
+      title: Text(text),
+      onTap: () => {Navigator.of(context).pop()},
+    );
+  }
+  @override
+  Widget build(BuildContext context) {
+    return Drawer(
+      child: ListView(
+        padding: EdgeInsets.zero,
+        children: <Widget>[
+          DrawerHeader(
+            child: Center(
+              child: Text(
+                'Right Side menu',
+                style: TextStyle(color: Colors.black, fontSize: 25),
               ),
-              title: SizedBox.shrink()
+            ),
           ),
-          BottomNavigationBarItem(
-              icon: Icon(
-                FontAwesomeIcons.comments,
-                size: 20.0,
-                color: Colors.black,
-              ),
-              title: SizedBox.shrink()
-          ),
-          BottomNavigationBarItem(
-              icon: Icon(
-                FontAwesomeIcons.user,
-                size: 20.0,
-                color: Colors.black,
-              ),
-              title: SizedBox.shrink()
-          ),
+          _buildTile(context: context, icon : Icons.input, text: 'Welcome'),
+          _buildTile(context: context, icon : Icons.verified_user, text: 'Profile'),
+          _buildTile(context: context, icon : Icons.settings, text: 'Settings'),
+          _buildTile(context: context, icon : Icons.border_color, text: 'Feedback'),
+          _buildTile(context: context, icon : Icons.exit_to_app, text: 'Logout'),
         ],
       ),
     );
