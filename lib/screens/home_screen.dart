@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-import 'package:flutter_knob/flutter_knob.dart';
+import 'package:custom_switch/custom_switch.dart';
 
 class HomeScreen extends StatefulWidget {
   @override
@@ -15,7 +15,9 @@ class _HomeScreenState extends State<HomeScreen> {
         drawer: leadDrawer(),
         endDrawer: endDrawer(),
         appBar: AppBar(
-          backgroundColor: Colors.white,
+          bottomOpacity: 0.0,
+          elevation: 0.0,
+          backgroundColor: Colors.transparent,
           leading: Builder(
             builder: (context) {
               return IconButton(
@@ -49,39 +51,37 @@ class _HomeScreenState extends State<HomeScreen> {
         body: Column(
           children: <Widget>[
             DefaultTabController(
-                length: 5,
-                child: Column(
-                  children: <Widget>[
-                    TabBar(
-                      unselectedLabelColor: Colors.grey,
-                      labelColor: Theme.of(context).accentColor,
-                      tabs: <Widget>[
-                        Tab(icon: Icon(FontAwesomeIcons.wind)),
-                        Tab(icon: Icon(FontAwesomeIcons.lightbulb)),
-                        Tab(icon: Icon(FontAwesomeIcons.tree)),
-                        Tab(icon: Icon(FontAwesomeIcons.tv)),
-                        Tab(icon: Icon(FontAwesomeIcons.volumeUp)),
-                      ],
-                    ),
-                    // Needed a Sized box as TabBarView requires Finite?
-                    SizedBox(
-                      height: 490.0,
-                      child: Container(
-                        color: Colors.red,
-                        child: TabBarView(
-                          children: <Widget>[
-                            Icon(Icons.apps),
-                            Icon(Icons.apps),
-                            Icon(Icons.apps),
-                            Icon(Icons.apps),
-                            Icon(Icons.apps),
-                          ],
-                        ),
+              length: 5,
+              child: Column(
+                children: <Widget>[
+                  TabBar(
+                    unselectedLabelColor: Colors.grey,
+                    labelColor: Theme.of(context).accentColor,
+                    tabs: <Widget>[
+                      Tab(icon: Icon(FontAwesomeIcons.wind)),
+                      Tab(icon: Icon(FontAwesomeIcons.lightbulb)),
+                      Tab(icon: Icon(FontAwesomeIcons.tree)),
+                      Tab(icon: Icon(FontAwesomeIcons.tv)),
+                      Tab(icon: Icon(FontAwesomeIcons.volumeUp)),
+                    ],
+                  ),
+                  // Needed a Sized box as TabBarView requires Finite?
+                  SizedBox(
+                    height: 490.0,
+                    child: Container(
+                      child: TabBarView(
+                        children: <Widget>[
+                          roomTemperature(),
+                          Icon(Icons.apps),
+                          Icon(Icons.apps),
+                          Icon(Icons.apps),
+                          Icon(Icons.apps),
+                        ],
                       ),
-                    )
-                  ],
-                ),
-
+                    ),
+                  )
+                ],
+              ),
             ),
           ],
         ),
@@ -99,6 +99,119 @@ class _HomeScreenState extends State<HomeScreen> {
       ),
     );
   }
+}
+
+class roomTemperature extends StatefulWidget {
+  @override
+  _roomTemperatureState createState() => _roomTemperatureState();
+}
+
+class _roomTemperatureState extends State<roomTemperature> {
+  //Variables
+  int speed = 1;
+  bool onOffToggle = false;
+
+  @override
+  Widget build(BuildContext context) {
+    return Column(
+      children: <Widget>[
+        // TODO: Knob Controller
+        Expanded(
+          flex: 4,
+          child: Container(
+            color: Colors.green,
+          ),
+        ),
+        // TODO: Wind Speed Controler
+        Expanded(
+          flex: 2,
+          child: Container(
+              child: Container(
+            width: 300,
+            child: Column(
+              children: <Widget>[
+                SizedBox(height: 20,),
+                Center(child: Text('Wind Speed', style: TextStyle(fontWeight: FontWeight.bold),)),
+                Expanded(
+                  child: SizedBox(
+                    width: 250,
+                    child: SliderTheme(
+                      data: SliderTheme.of(context).copyWith(
+                          inactiveTrackColor: Color(0XFF8D8E98),
+                          activeTrackColor: Theme.of(context).accentColor,
+                          thumbColor: Theme.of(context).accentColor,
+                          overlayColor: Theme.of(context).accentColor,
+                          thumbShape:
+                              RoundSliderThumbShape(enabledThumbRadius: 6.0),
+                          overlayShape:
+                              RoundSliderOverlayShape(overlayRadius: 8.0)),
+                      child: Slider(
+                        value: speed.toDouble(),
+                        min: 1.0,
+                        max: 5.0,
+                        onChanged: (double newValue) {
+                          setState(() {
+                            speed = newValue.round();
+                          });
+                        },
+                      ),
+                    ),
+                  ),
+                ),
+                Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 20.0),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: <Widget>[
+                      Text(
+                        'Low',
+                        style: TextStyle(
+                          color: Colors.grey,
+                        ),
+                      ),
+                      Text(
+                        'Medium',
+                        style: TextStyle(
+                          color: Colors.grey,
+                        ),
+                      ),
+                      Text(
+                        'High',
+                        style: TextStyle(
+                          color: Colors.grey,
+                        ),
+                      )
+                    ],
+                  ),
+                ),
+                SizedBox(height: 20,),
+              ],
+            ),
+          )),
+        ),
+        // TODO: On Off button
+        Expanded(
+          flex: 1,
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: <Widget>[
+              CustomSwitch(
+                activeColor: Theme.of(context).accentColor,
+                value: onOffToggle,
+                onChanged: (value){
+                  print("VALUE : $value");
+                  setState(() {
+                    onOffToggle = value;
+                  });
+                },
+              ),
+            ],
+          ),
+        ),
+      ],
+    );
+  }
+
 }
 
 // Build Bottom Bar Items

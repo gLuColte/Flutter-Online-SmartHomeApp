@@ -64,18 +64,18 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "0.1.3"
+  custom_switch:
+    dependency: "direct main"
+    description:
+      name: custom_switch
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "0.0.1"
   flutter:
     dependency: "direct main"
     description: flutter
     source: sdk
     version: "0.0.0"
-  flutter_knob:
-    dependency: "direct main"
-    description:
-      name: flutter_knob
-      url: "https://pub.dartlang.org"
-    source: hosted
-    version: "0.0.2"
   flutter_test:
     dependency: "direct dev"
     description: flutter
