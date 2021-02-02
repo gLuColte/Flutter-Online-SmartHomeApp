@@ -8,3 +8,11 @@ The Design of the SmartHome is as follow:
 
 #### Dribbble Page : https://dribbble.com/shots/14085890-Smart-Home-Mobile-App
 
+<p float="left">
+  <img src="https://user-images.githubusercontent.com/67504821/106595233-59795600-65a7-11eb-9164-b56c7de23e16.gif" width="300">
+  <img src="https://user-images.githubusercontent.com/67504821/106595241-5c744680-65a7-11eb-89dd-ae31db2282a6.gif" width="300">
+  <img src="https://user-images.githubusercontent.com/67504821/106595244-5da57380-65a7-11eb-9dc7-99b311114cd8.gif" width="300">
+  <img src="https://user-images.githubusercontent.com/67504821/106595249-5f6f3700-65a7-11eb-8182-2fd4aa61c3ab.gif" width="300">
+  <img src="https://user-images.githubusercontent.com/67504821/106595255-61d19100-65a7-11eb-9509-4d342cc07b29.gif" width="300">
+  <img src="https://user-images.githubusercontent.com/67504821/106595269-68f89f00-65a7-11eb-8337-9e008b93d089.gif" width="300">
+ </p>
