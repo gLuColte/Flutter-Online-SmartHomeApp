@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-import 'package:smart_home_app/main.dart';
+import 'package:flutter_knob/flutter_knob.dart';
 
 class HomeScreen extends StatefulWidget {
   @override
@@ -8,21 +8,6 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _HomeScreenState extends State<HomeScreen> {
-  // Drawer
-  GlobalKey<ScaffoldState> _drawerKey = GlobalKey();
-
-  // Build Bottom Bar Items
-  BottomNavigationBarItem _buildBottomItem({IconData icon}){
-    return BottomNavigationBarItem(
-        icon: Icon(
-          icon,
-          size: 20.0,
-          color: Colors.black,
-        ),
-        title: SizedBox.shrink()
-    );
-  }
-
   @override
   Widget build(BuildContext context) {
     return SafeArea(
@@ -32,10 +17,13 @@ class _HomeScreenState extends State<HomeScreen> {
         appBar: AppBar(
           backgroundColor: Colors.white,
           leading: Builder(
-            builder: (context){
+            builder: (context) {
               return IconButton(
-                icon: Icon(FontAwesomeIcons.list, color: Colors.black,),
-                onPressed: (){
+                icon: Icon(
+                  FontAwesomeIcons.list,
+                  color: Colors.black,
+                ),
+                onPressed: () {
                   Scaffold.of(context).openDrawer();
                 },
               );
@@ -43,10 +31,13 @@ class _HomeScreenState extends State<HomeScreen> {
           ),
           actions: <Widget>[
             Builder(
-              builder: (context){
+              builder: (context) {
                 return IconButton(
-                  icon: Icon(Icons.person, color: Colors.black,),
-                  onPressed: (){
+                  icon: Icon(
+                    Icons.person,
+                    color: Colors.black,
+                  ),
+                  onPressed: () {
                     Scaffold.of(context).openEndDrawer();
                   },
                 );
@@ -54,17 +45,14 @@ class _HomeScreenState extends State<HomeScreen> {
             )
           ],
         ),
+
         body: Column(
           children: <Widget>[
-            Expanded(
-              child: DefaultTabController(
+            DefaultTabController(
                 length: 5,
-                child: Scaffold(
-                  appBar: AppBar(
-                    bottomOpacity: 0.0,
-                    elevation: 0.0,
-                    backgroundColor: Colors.transparent,
-                    title: TabBar(
+                child: Column(
+                  children: <Widget>[
+                    TabBar(
                       unselectedLabelColor: Colors.grey,
                       labelColor: Theme.of(context).accentColor,
                       tabs: <Widget>[
@@ -74,31 +62,38 @@ class _HomeScreenState extends State<HomeScreen> {
                         Tab(icon: Icon(FontAwesomeIcons.tv)),
                         Tab(icon: Icon(FontAwesomeIcons.volumeUp)),
                       ],
+                    ),
+                    // Needed a Sized box as TabBarView requires Finite?
+                    SizedBox(
+                      height: 490.0,
+                      child: Container(
+                        color: Colors.red,
+                        child: TabBarView(
+                          children: <Widget>[
+                            Icon(Icons.apps),
+                            Icon(Icons.apps),
+                            Icon(Icons.apps),
+                            Icon(Icons.apps),
+                            Icon(Icons.apps),
+                          ],
+                        ),
+                      ),
                     )
-                  ),
-                  body: TabBarView(
-                    children: <Widget>[
-                      Icon(Icons.apps),
-                      Icon(Icons.apps),
-                      Icon(Icons.apps),
-                      Icon(Icons.apps),
-                      Icon(Icons.apps),
-                    ],
-                  ),
+                  ],
                 ),
-              )
+
             ),
           ],
         ),
+
         // TODO: Need to be replaced with a Clickable widget that opens to another window
         bottomNavigationBar: BottomNavigationBar(
-
           type: BottomNavigationBarType.fixed,
           items: [
-            _buildBottomItem(icon: FontAwesomeIcons.home),
-            _buildBottomItem(icon: FontAwesomeIcons.wallet),
-            _buildBottomItem(icon: FontAwesomeIcons.comments),
-            _buildBottomItem(icon: FontAwesomeIcons.users),
+            buildBottomItem(icon: FontAwesomeIcons.home),
+            buildBottomItem(icon: FontAwesomeIcons.wallet),
+            buildBottomItem(icon: FontAwesomeIcons.comments),
+            buildBottomItem(icon: FontAwesomeIcons.users),
           ],
         ),
       ),
@@ -106,15 +101,30 @@ class _HomeScreenState extends State<HomeScreen> {
   }
 }
 
+// Build Bottom Bar Items
+BottomNavigationBarItem buildBottomItem({IconData icon}) {
+  return BottomNavigationBarItem(
+      icon: Icon(
+        icon,
+        size: 20.0,
+        color: Colors.black,
+      ),
+      title: SizedBox.shrink());
+}
+
+// Build Bottom Bar Items
+ListTile buildTile({BuildContext context, IconData icon, String text}) {
+  return ListTile(
+    leading: Icon(
+      icon,
+      color: Theme.of(context).accentColor,
+    ),
+    title: Text(text),
+    onTap: () => {Navigator.of(context).pop()},
+  );
+}
+
 class leadDrawer extends StatelessWidget {
-  // Build Bottom Bar Items
-  ListTile _buildTile({BuildContext context, IconData icon, String text}){
-    return ListTile(
-        leading: Icon(icon,),
-        title: Text(text),
-        onTap: () => {Navigator.of(context).pop()},
-    );
-  }
   @override
   Widget build(BuildContext context) {
     return Drawer(
@@ -129,11 +139,13 @@ class leadDrawer extends StatelessWidget {
               ),
             ),
           ),
-          _buildTile(context: context, icon : Icons.input, text: 'Welcome'),
-          _buildTile(context: context, icon : Icons.verified_user, text: 'Profile'),
-          _buildTile(context: context, icon : Icons.settings, text: 'Settings'),
-          _buildTile(context: context, icon : Icons.border_color, text: 'Feedback'),
-          _buildTile(context: context, icon : Icons.exit_to_app, text: 'Logout'),
+          buildTile(context: context, icon: Icons.input, text: 'Welcome'),
+          buildTile(
+              context: context, icon: Icons.verified_user, text: 'Profile'),
+          buildTile(context: context, icon: Icons.settings, text: 'Settings'),
+          buildTile(
+              context: context, icon: Icons.border_color, text: 'Feedback'),
+          buildTile(context: context, icon: Icons.exit_to_app, text: 'Logout'),
         ],
       ),
     );
@@ -141,34 +153,41 @@ class leadDrawer extends StatelessWidget {
 }
 
 class endDrawer extends StatelessWidget {
-  // Build Bottom Bar Items
-  ListTile _buildTile({BuildContext context, IconData icon, String text}){
-    return ListTile(
-      leading: Icon(icon,),
-      title: Text(text),
-      onTap: () => {Navigator.of(context).pop()},
-    );
-  }
   @override
   Widget build(BuildContext context) {
-    return Drawer(
-      child: ListView(
-        padding: EdgeInsets.zero,
-        children: <Widget>[
-          DrawerHeader(
-            child: Center(
-              child: Text(
-                'Right Side menu',
-                style: TextStyle(color: Colors.black, fontSize: 25),
-              ),
+    return SizedBox(
+      width: 200,
+      child: Drawer(
+        child: ListView(
+          padding: EdgeInsets.zero,
+          children: <Widget>[
+            DrawerHeader(
+              child: Center(
+                  child: Column(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: <Widget>[
+                  CircleAvatar(
+                    radius: 50.0,
+                    backgroundImage:
+                        NetworkImage('http://i.imgur.com/zL4Krbz.jpg'),
+                  ),
+                  Text(
+                    'Jonathan',
+                    style: TextStyle(fontSize: 20),
+                  )
+                ],
+              )),
             ),
-          ),
-          _buildTile(context: context, icon : Icons.input, text: 'Welcome'),
-          _buildTile(context: context, icon : Icons.verified_user, text: 'Profile'),
-          _buildTile(context: context, icon : Icons.settings, text: 'Settings'),
-          _buildTile(context: context, icon : Icons.border_color, text: 'Feedback'),
-          _buildTile(context: context, icon : Icons.exit_to_app, text: 'Logout'),
-        ],
+            buildTile(context: context, icon: Icons.input, text: 'Welcome'),
+            buildTile(
+                context: context, icon: Icons.verified_user, text: 'Profile'),
+            buildTile(context: context, icon: Icons.settings, text: 'Settings'),
+            buildTile(
+                context: context, icon: Icons.border_color, text: 'Feedback'),
+            buildTile(
+                context: context, icon: Icons.exit_to_app, text: 'Logout'),
+          ],
+        ),
       ),
     );
   }
