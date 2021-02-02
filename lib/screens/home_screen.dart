@@ -1,8 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:smart_home_app/widgets/homeScreenWidgets.dart';
-import 'package:custom_switch/custom_switch.dart';
-import 'package:smart_home_app/main.dart';
+
 
 class HomeScreen extends StatefulWidget {
   @override
@@ -11,11 +10,7 @@ class HomeScreen extends StatefulWidget {
 
 class _HomeScreenState extends State<HomeScreen> {
   int _currentIndex = 0;
-  void _onBottomTap(int index){
-    setState(() {
-      _currentIndex = index;
-    });
-  }
+
   @override
   Widget build(BuildContext context) {
     return SafeArea(
@@ -94,7 +89,6 @@ class _HomeScreenState extends State<HomeScreen> {
           ],
         ),
 
-        // TODO: Need to be replaced with a Clickable widget that opens to another window
         bottomNavigationBar: BottomNavigationBar(
           type: BottomNavigationBarType.fixed,
           currentIndex: _currentIndex,
