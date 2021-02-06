@@ -9,10 +9,10 @@ The Design of the SmartHome is as follow:
 #### Dribbble Page : https://dribbble.com/shots/14085890-Smart-Home-Mobile-App
 
 <p float="left">
-  <img src="https://user-images.githubusercontent.com/67504821/106595233-59795600-65a7-11eb-9164-b56c7de23e16.gif" width="300">
-  <img src="https://user-images.githubusercontent.com/67504821/106595241-5c744680-65a7-11eb-89dd-ae31db2282a6.gif" width="300">
-  <img src="https://user-images.githubusercontent.com/67504821/106595244-5da57380-65a7-11eb-9dc7-99b311114cd8.gif" width="300">
-  <img src="https://user-images.githubusercontent.com/67504821/106595249-5f6f3700-65a7-11eb-8182-2fd4aa61c3ab.gif" width="300">
-  <img src="https://user-images.githubusercontent.com/67504821/106595255-61d19100-65a7-11eb-9509-4d342cc07b29.gif" width="300">
-  <img src="https://user-images.githubusercontent.com/67504821/106595575-dad0e880-65a7-11eb-8e27-d150678cdf39.gif" width="300">
+  <img src="https://user-images.githubusercontent.com/67504821/107106498-16a5cf80-6880-11eb-9297-494f8420daf7.gif" width="300">
+  <img src="https://user-images.githubusercontent.com/67504821/107106492-10175800-6880-11eb-9e9b-1eb8c7b5e932.gif" width="300">
+  <img src="https://user-images.githubusercontent.com/67504821/107106490-0db4fe00-6880-11eb-9f21-39c1301538bd.gif" width="300">
+  <img src="https://user-images.githubusercontent.com/67504821/107106499-17d6fc80-6880-11eb-8216-a3de22955255.gif" width="300">
+  <img src="https://user-images.githubusercontent.com/67504821/107106500-17d6fc80-6880-11eb-9dd1-eff6313395cd.gif" width="300">
+  <img src="https://user-images.githubusercontent.com/67504821/107106501-186f9300-6880-11eb-8291-a0a4d9dd8744.gif" width="300">
  </p>
